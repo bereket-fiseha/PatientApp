@@ -34,6 +34,8 @@ def patient_update(request):
         return HttpResponse("Patient not found", status=404)
     except Exception as ex:
         return HttpResponse(f"error: {str(ex)}", status=500)
+    
+    
 def home(request):
     patients=Patient.objects.all()
     return render(request,"patient/home.html",context={'patients':patients})    

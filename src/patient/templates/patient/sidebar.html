@@ -1,0 +1,60 @@
+{%load static %}
+<header class="header text-center">	    
+    <div class="force-overflow">
+        {% comment %} <h1 class="blog-name pt-lg-4 mb-0"><a class="no-text-decoration" href="index.html">Clinic X</a></h1>
+         {% endcomment %}
+        <nav class="navbar navbar-expand-lg navbar-dark" >
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div id="navigation" class="collapse navbar-collapse flex-column" >
+                <div class="profile-section pt-3 pt-lg-0">
+                    <img class="profile-image mb-3 rounded-circle mx-auto" src="{%static 'user/img/clinicX.png'%}" alt="image" >			
+                  <!--//social-list-->
+                    <hr> 
+                </div><!--//profile-section-->
+                <hr class="mb-4"/>
+                <ul class="navbar-nav flex-column text-start">
+    
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="resume.html"><i class="fas fa-file-alt fa-fw me-2"></i>Patient</a>
+                    </li>
+                    {% comment %} <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'llm_chat' %}active{% endif %}" 
+                        href="{%url 'assistant:llm_chat'%}"><i class="fas fa-laptop-code fa-fw me-2"></i>AI Assistant</a>
+                     </li> {% endcomment %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html"><i class="fas fa-briefcase fa-fw me-2"></i>Medical Charts </a>
+                    </li>
+                  
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cogs fa-fw me-2"></i>Setting
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="project.html">Project Page</a></li>
+                            <li><a class="dropdown-item" href="blog-home.html">Blog Home 1</a></li>
+                            <li><a class="dropdown-item" href="blog-home-alt.html">Blog Home 2</a></li>
+                            <li><a class="dropdown-item" href="blog-post.html">Blog Post</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                
+              
+                
+
+                <div class="dark-mode-toggle  w-100">
+                    <hr class="mb-4">
+                    <h4 class="toggle-name mb-3 "><i class="fas fa-adjust me-1"></i>Dark Mode</h4>
+                    
+                    <input class="toggle" id="darkmode" type="checkbox">
+                    <label class="toggle-btn mx-auto mb-0" for="darkmode"></label>
+                    
+                </div><!--//dark-mode-toggle-->
+            </div>
+        </nav>
+    </div><!--//force-overflow-->
+</header>

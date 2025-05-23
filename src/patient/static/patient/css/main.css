@@ -1,0 +1,124 @@
+body{
+
+background: #f8fcfd;
+background-color: #f6f5f3;
+}
+span.dt-column-title {
+    color: #078907;
+}
+td{
+    color:#178d17!important;
+}
+nav-bar {
+  background-color: #f8f4e5;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+div#navbarTogglerDemo01 
+{
+  margin-left:300px;
+  
+}
+.toast.toast-success{
+background-color: green !important;
+
+}
+.select-dropdown{
+
+    padding-top:0px !important;
+    
+    padding-bottom:0px !important;
+}
+.nav-light{
+    background-color: #f6f4e1 !important;
+}
+.header .nav-item .nav-link {
+    color: rgb(0 0 0 / 80%) !important;
+}
+.header{
+        background: #eedbb7 !important;
+}
+.todo-container{
+border-radius:10px;
+border:3px solid lightblue;
+overflow:auto;
+height:530px;
+
+}
+.chat-card{
+max-width: 1100px;
+margin-left:500px;
+margin-top:50px;
+
+}
+   .chat-container {
+    width: 100%; 
+              /* Reduced from 100% to 50% */
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .chat-log {
+    height: 600px;        /* Reduced from 580px to 290px */
+    padding: 10px;
+    overflow-y: scroll;
+    background-color: #f9f9f9;
+  }
+ 
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        background-color: #eee;
+    }
+
+    .chat-input input {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .chat-input button,
+    .upload-button {
+        padding: 8px 12px;
+        margin-left: 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .chat-input button:hover,
+    .upload-button:hover {
+        background-color: #0056b3;
+    }
+
+    .message {
+        padding: 8px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        clear: both;
+    }
+
+    .user-message {
+        background-color: #e2f7cb;
+        float: right;
+    }
+
+    .bot-message {
+        background-color: #fff;
+        float: left;
+        position: relative; /* Add this to contain the spinner */
+    }
+
+    #loading-spinner {
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        transform: translate(-50%, -50%);
+        z-index: 10; /* Ensure it's on top of other elements */
+    }

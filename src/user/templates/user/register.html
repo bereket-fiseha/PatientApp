@@ -1,0 +1,26 @@
+{% extends "user/base.html" %}
+{%block title %}
+{% load static %}
+Register New User
+{%endblock%}
+{%block content%}
+<div class="container">
+
+<div class="main-body register-form user-form">
+    <form method="post">
+    {% csrf_token %}
+        <h4>Register</h4>
+    {{form}}
+    <button class="btn btn-secondary mt-4">Register</button>
+</form>
+</div>
+
+</div>
+<style>
+    body{
+            background-image: url("{% static 'user/img/user_register.jpg' %}");
+
+    }
+  
+</style>
+{%endblock%}

@@ -45,7 +45,7 @@ The **Patient Registration System** is a Django-based web application designed t
 
 
 
-## Installation
+## 🥃 Installation
 
 1. Clone the repository:
   ```bash

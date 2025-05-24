@@ -23,22 +23,22 @@ The **Patient Registration System** is a Django-based web application designed t
 - **Database**: SQLite (default) or any Django-supported database
 - **Other Tools**: Bootstrap (for styling)
 ## Snapshot
-** 1.Login and Sign Up ** 
+**1.Login and Sign Up** 
 
 
-** 2. Patient List **
-
-
-
-** 3. Patient Craete/update **
-
-
-** 4. Patient delete **
+**2. Patient List**
 
 
 
+**3. Patient Craete/update**
 
-** 5. mail Send **
+
+**4. Patient delete**
+
+
+
+
+**5. mail Send**
 
 
 

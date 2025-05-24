@@ -4,15 +4,14 @@
 The **Patient Registration System** is a Django-based web application designed to manage patient information efficiently. It allows users to register, update, and view patient details in a secure and user-friendly interface.
 
 
-[![Django](https://img.shields.io/badge/Django-4.2-green.svg)](https://www.djangoproject.com/)
+[![Django](https://img.shields.io/badge/Django-5.2-green.svg)](https://www.djangoproject.com/)
 [![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/yourusername/your-repo-name/django.yml?branch=main)](https://github.com/yourusername/your-repo-name/actions)
-[![Coverage Status](https://img.shields.io/codecov/c/github/yourusername/your-repo-name?label=coverage)](https://codecov.io/gh/yourusername/your-repo-name)
-[![Issues](https://img.shields.io/github/issues/yourusername/your-repo-name.svg)](https://github.com/yourusername/your-repo-name/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/yourusername/your-repo-name.svg)](https://github.com/yourusername/your-repo-name/commits)
-[![Contributors](https://img.shields.io/github/contributors/yourusername/your-repo-name.svg)](https://github.com/yourusername/your-repo-name/graphs/contributors)
-[![Stars](https://img.shields.io/github/stars/yourusername/your-repo-name.svg?style=social)](https://github.com/yourusername/your-repo-name/stargazers)
+[![Coverage Status](https://img.shields.io/codecov/c/github/bereket-fiseha/PatientApp?label=coverage)](https://codecov.io/gh/bereket-fiseha/PatientApp)
+[![Issues](https://img.shields.io/github/issues/bereket-fiseha/PatientApp.svg)](https://github.com//bereket-fiseha/PatientApp/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/bereket-fiseha/PatientApp.svg)](https://github.com/bereket-fiseha/PatientApp/commits)
+[![Contributors](https://img.shields.io/github/contributors/bereket-fiseha/PatientApp.svg)](https://github.com/bereket-fiseha/PatientApp/graphs/contributors)
+[![Stars](https://img.shields.io/github/stars/bereket-fiseha/PatientApp.svg?style=social)](https://github.com/bereket-fiseha/PatientApp/stargazers)
 ## ✨ Features
 - User authentication and authorization.
 - Add, edit, and delete patient records with searh and filter.

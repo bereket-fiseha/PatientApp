@@ -15,7 +15,7 @@ The **Patient Registration System** is a Django-based web application designed t
 ## ✨ Features
 - User authentication and authorization.
 - Add, edit, and delete patient records with searh and filter.
-- Email capability for patient
+- Email capability 
 
 ## 🛠 Tech Stack
 - **Backend**: Django (Python)
@@ -30,7 +30,7 @@ The **Patient Registration System** is a Django-based web application designed t
 ![login](https://github.com/user-attachments/assets/8cfaa0b5-8d57-4424-9187-b6c222c31a7b) ![register](https://github.com/user-attachments/assets/b3043f9f-d78f-4f08-b6c0-745cecd62394)
 
 ### 2. Patient List
-
+- Paginated patient list with data table 
 ![patient list](https://github.com/user-attachments/assets/bdb299d8-f281-4786-9788-ec6498a0ee1f)
 
 

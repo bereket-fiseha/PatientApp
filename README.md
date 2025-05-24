@@ -25,12 +25,16 @@ The **Patient Registration System** is a Django-based web application designed t
 ## Snapshot
 **1.Login and Sign Up** 
 
+![login](https://github.com/user-attachments/assets/8cfaa0b5-8d57-4424-9187-b6c222c31a7b)
+![register](https://github.com/user-attachments/assets/b3043f9f-d78f-4f08-b6c0-745cecd62394)
 
 **2. Patient List**
+![patient list](https://github.com/user-attachments/assets/bdb299d8-f281-4786-9788-ec6498a0ee1f)
 
 
 
 **3. Patient Craete/update**
+![patient create](https://github.com/user-attachments/assets/d8848ef5-796f-40e0-bff7-a04e8878f9aa)
 
 
 **4. Patient delete**
@@ -38,7 +42,8 @@ The **Patient Registration System** is a Django-based web application designed t
 
 
 
-**5. mail Send**
+**5. Email Send**
+![email sending](https://github.com/user-attachments/assets/deb5f3e7-c5bb-4c71-8972-b5fc2e39cc14)
 
 
 

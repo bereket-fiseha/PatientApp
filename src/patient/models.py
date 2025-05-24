@@ -9,7 +9,8 @@ class Patient(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     gender=models.CharField(max_length=50) 
-
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True) 
     address = models.TextField()
     @property
     def full_name(self):

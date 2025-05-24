@@ -1,46 +1,91 @@
-## Todoapp
-A django based todoapp that has features such as adding new todo, edit ,delete and filter based on date and status.
+# 🧠 Django Patient Registration
+
+## Overview
+The **Patient Registration System** is a Django-based web application designed to manage patient information efficiently. It allows users to register, update, and view patient details in a secure and user-friendly interface.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 ![Django](https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white)
 
-## Deployment
+## ✨ Features
+- User authentication and authorization.
+- Add, edit, and delete patient records with searh and filter.
+- Email capability for patient
 
-To run  this project run
+## Technologies Used
+- **Backend**: Django (Python)
+- **Frontend**: HTML, CSS, JavaScript
+- **Database**: SQLite (default) or any Django-supported database
+- **Other Tools**: Bootstrap (for styling)
 
-```bash
+## Installation
+
+1. Clone the repository:
+  ```bash
+  git clone https://github.com/your-username/patient-registration.git
   cd src
-  .\venv\scripts\activate
+  ```
+
+2. Create and activate a virtual environment:
+  ```bash
+  python -m venv venv
+  source venv/bin/activate  # On Windows: venv\Scripts\activate
+  ```
+
+3. Install dependencies:
+  ```bash
   pip install -r requirements.txt
-  cd core
+  ```
+
+4. Apply migrations:
+  ```bash
+  python manage.py migrate
+  ```
+
+5. Run the development server:
+  ```bash
   python manage.py runserver
+  ```
+
+6. Open your browser and navigate to:
+  ```
+  http://127.0.0.1:8000/
+  ```
+
+
+## Folder Structure
 ```
-
-  ## Todo List
-- List of todos,
-![todolist](https://github.com/user-attachments/assets/8931c7ad-6933-476f-ab55-d19d55b99bc7)
-
-## Add Todo
-![todo add](https://github.com/user-attachments/assets/bdf03f7e-7aaa-4a20-bfc7-f2c2cec77f91)
-
-
-## Edit Todo
-![todo edit](https://github.com/user-attachments/assets/72ab4000-7228-4a65-b6d6-f45e22c9e4f6)
+src/
+├── core/
+├── patient/  # Main Django app
+├── db.sqlite3             # SQLite database
+├── manage.py              # Django management script
+└── requirements.txt       # Python dependencies
+```
+## Snapshot
+** 1.Login and Sign Up ** 
 
 
-## Filter Todo 
-![filter](https://github.com/user-attachments/assets/4588cff9-d4a4-415b-bf0e-3711e627c533)
+** 2. Patient List **
 
 
 
+** 3. Patient Craete/update **
 
 
-
+** 4. Patient delete **
 
 
 
 
+** 5. mail Send **
 
 
 
 
+
+
+
+
+
+## License
+This project is licensed under the [MIT License](LICENSE).

@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-@dyybv%rc1oc26mc)q$4f=7xb04)c_(xvrq7@d*2iu=prqe&2v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["patientapp-geyf.onrender.com"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -129,3 +129,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'codigorey111@gmail.com'
+EMAIL_HOST_PASSWORD = 'vtmk gvxf pjgc xthc'
+
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

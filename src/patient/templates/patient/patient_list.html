@@ -17,7 +17,7 @@
       </div>
       <div class="modal-body">
         <!--form start-->
-        <form>
+        <form id="patient-form" >  
           {% csrf_token %}
           <div class="form-group mb-2">
             <label for="first_name">First Name:</label>
@@ -68,7 +68,7 @@
         >
           Close
         </button>
-        <button type="button" class="btn btn-primary" onclick="createpatient()">
+        <button type="button" class="btn btn-primary" onclick="savePatient()">
           Save changes
         </button>
       </div>
@@ -112,6 +112,7 @@
                   <th>Address</th>
                   <th>Age</th>
                   <th>Phone</th>
+                            <th>Created At</th>
                      <th></th>
                                     <th></th>
                 </tr>
@@ -119,6 +120,7 @@
               <tbody>
                 {%for patient in patients%}
                 <tr>
+             
                   <td>{{patient.full_name}}</td>
 
                   <td>{{patient.gender}}</td>
@@ -127,10 +129,11 @@
                   <td>{{patient.address}}</td>
                   <td>{{patient.age}}</td>
                   <td>{{patient.phone_number}}</td>
+                                   <td>{{patient.created_at |date}}</td>
                   <td>
                     <button
                       class="btn mb-2"
-                      onclick="openTodoModalForEdit({{todo.id}})"
+                      onclick="openPatientModalForEdit({{patient.id}})"
                     >
                       <i class="fa fa-edit fa-lg" area-hidden="true"></i>
                     </button>
@@ -138,7 +141,7 @@
                   <td>
                     <button
                       class="btn"
-                      onclick="deleteTodo({{todo.id}})"
+                      onclick="deletePatient({{patient.id}})"
                     >
                       <i class="fa fa-trash fa-lg" area-hidden="true"></i>
                     </button>
@@ -159,24 +162,29 @@
 {%endblock%} {%block jsscripts%}
 
 <script>
+  var edit_id;
+ create_mode=true;
   $(document).ready(function () {
-    $("#example").DataTable({ pageLength: 5 });
+    $("#example").DataTable({ pageLength: 5,ordering:false });
   });
   function openPatientModalForCreate() {
     $("#patient-create-update-modal").modal("show");
+    create_mode=true;
+    $("#patient-form")[0].reset();
+  }
+    function openPatientModalForEdit(id) {
+    $("#patient-create-update-modal").modal("show");
+fillPatientEditModal(id)
+edit_id=id;
+   create_mode=false;
   }
   function closepatientModal() {
     $("#patient-create-update-modal").modal("hide");
   }
 
-  function createpatient() {
-    $.ajax({
-      url: "{%url 'patientapp:patient_create'%}",
-      headers: {
-        "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
-      },
-      type: "POST",
-      data: {
+  function savePatient() {
+    var dict={
+     
         first_name: $("#first_name").val(),
         last_name: $("#last_name").val(),
         date_of_birth: $("#date_of_birth").val(),
@@ -185,48 +193,70 @@
         gender: $("#gender").val(),
 
         address: $("#address").val(),
-      },
-      success: function (result) {
-        console.log(result);
-        if (result == "success") {
-          toastr.success("Patient created successfully");
-          setTimeout(() => {
-            window.location.reload();
-          }, "2500");
-        }
-      },
-      error: function () {},
-    });
-  }
-
-  function updatePatient() {
+      }
+      if (!create_mode && edit_id != undefined) {
+        dict["id"] = edit_id;
+      }
     $.ajax({
-      url: "{%url 'patientapp:patient_update'%}",
+      url: "{%url 'patientapp:patient_save'%}",
       headers: {
         "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
       },
       type: "POST",
-      data: {
-        first_name: $("#first_name").val(),
-        last_name: $("#last_name").val(),
-        date_of_birth: $("#date_of_birth").val(),
-        phone_number: $("#phone_number").val(),
-        email: $("#email").val(),
-        gender: $("#gender").val(),
+      data: dict,
+      success: function (result) {
+        console.log(result);
+        if (result.registration == "success") {
+          toastr.success("Patient saved successfully");
+             setTimeout(() => {
+   if (create_mode && result.email_sent == "success") {
+          toastr.success("Email Sent  successfully");
+ 
+        
+          }
+          else if(create_mode && result.email_sent == "failed"){
 
-        address: $("#address").val(),
+              toastr.error("Email sending failed!");
+          }
+        }, "2000");
+      }
+        
+
+      
+              setTimeout(() => {
+window.location.reload()
+          }, "1000");
+      
+    },
+      error: function () {},
+    });
+  }
+  function fillPatientEditModal(id){
+var uid = $(this).closest('tr').find('td:eq(0)').text();
+  console.log(uid);
+  console.log(id);
+$.ajax({
+      url: "/patient/"+id,
+      headers: {
+        "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
+      },
+      type: "GET",
+      data: {
+
       },
       success: function (result) {
         console.log(result);
-        if (result == "success") {
-          toastr.success("Patient update successfully");
-          setTimeout(() => {
-            window.location.reload();
-          }, "2500");
-        }
+        $.each(result[0]["fields"], function(key, value) {
+          $("#" + key).val(value);
+        });
       },
       error: function () {},
     });
   }
+ 
+  
+
+ 
+      
 </script>
 {%endblock%}

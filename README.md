@@ -1,7 +1,7 @@
 # 🧠 Django Mini EMR
 
 ## Overview
-The **Mini Emr System**  with secure user authentication, role-based access,   handling of patients, doctors, and medical records. It supports  medical charting (e.g., vitals, HPI, assessments), record assignment, and email notification.
+The **Mini Emr System**  has secure user authentication, role-based access,   handling of patients, doctors, and medical records. It supports  medical charting (e.g., vitals, HPI, assessments), record assignment, and email notification.
 
 
 

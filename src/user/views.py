@@ -33,7 +33,7 @@ def login_view(request):
           if form.is_valid():
 
                 login(request,form.get_user())
-                return redirect("patientapp:patient_list_view")
+                return redirect("emrapp:patient_view")
           else:
                return HttpResponse("Invalid credentials")
       

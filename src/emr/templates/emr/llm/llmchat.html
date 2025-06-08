@@ -1,0 +1,295 @@
+{% extends "emr/base.html" %} {%block content%}
+<div class="container mt-4">
+  <!-- Chat Container -->
+   "
+  <div class="card chat-card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <b>Task:</b>
+
+          <select name="lllm-task" id="llm-task">
+            <option value="general_assistant">General Assistant</option>
+
+            <option value="db_manipulation">
+              <b>DB Retrieval</b>
+            </option>
+
+            <option value="medical_image_analysis">
+              Medical Image Analysis
+            </option>
+
+            <option value="image_generation">
+              <b>Image Generation</b>
+            </option>
+
+            <option value="speech_recognition">Speech Recognition</option>
+          </select>
+
+          <span class="ml-3" style="margin-right: 40px"></span>
+          <b>Model:</b>
+
+          <select name="choose-model" id="choose-model">
+            <option value="gemini-2.0-flash@google">Gemini 2.5 Flash</option>
+
+            <option value="meta-llama/llama-4-scout-17b-16e-instruct@groq">
+              LLama-4 scout
+            </option>
+            <option value="meta-llama/llama-4-maverick-17b-128e-instruct@groq">
+              LLama-4 maverick
+            </option>
+
+            <option value="llama3.2">LLama 3.2 :(Ollama)</option>
+
+            <option value="llama-3.3-70b-versatile@groq">
+              <b>LLama 3:Groq-Text</b>
+            </option>
+
+            <option value="mistral-saba-24b@groq">Mistral:Groq-Text</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="chat-container">
+        <div id="chat-log" class="chat-log">
+          <!-- Messages will be displayed here -->
+        </div>
+        <div class="chat-input">
+          {%csrf_token%}
+          <input
+            type="text"
+            id="message-input"
+            placeholder="Type your message..."
+          />
+
+          <input type="text" id="user-prompt" hidden />
+          <button id="send-button">Send</button>
+          <button id="record-button">
+            <i class="fas fa-microphone"></i>
+          </button>
+          <label for="file-upload" class="upload-button"
+            ><i class="fas fa-upload"></i
+          ></label>
+
+          <input type="file" id="file-upload" style="display: none" />
+        </div>
+        <div id="loading-spinner" style="display: none">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://kit.fontawesome.com/your-fontawesome-kit.js"
+  crossorigin="anonymous"
+></script>
+
+{%endblock%} {%block jsscripts%}
+<script>
+  let history = [];
+  const $chatLog = $("#chat-log");
+  const $messageInput = $("#message-input");
+  const $sendButton = $("#send-button");
+  const $recordButton = $("#record-button");
+  const $fileUpload = $("#file-upload");
+  const $loadingSpinner = $("#loading-spinner");
+  const $conversationList = $("#conversation-list"); // Add this line
+
+  let mediaRecorder;
+  let audioChunks = [];
+
+  $sendButton.on("click", sendMessage);
+
+  $messageInput.keypress(function (event) {
+    if (event.key === "Enter") {
+      $("#user-prompt").val($messageInput.val());
+      sendMessage();
+    }
+  });
+
+  $recordButton.on("click", function () {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+      stopRecording();
+    } else {
+      startRecording();
+    }
+  });
+
+  $fileUpload.on("change", function () {
+    const file = this.files[0];
+    if (file) {
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          displayMessage(
+            '<img src="' +
+              e.target.result +
+              '" alt="Uploaded Image" style="max-width: 200px;">',
+            "user"
+          );
+        };
+        reader.readAsDataURL(file);
+      } else {
+        displayMessage("File uploaded: " + file.name, "user");
+      }
+      // You can add code here to handle file uploads to a server
+      getLLMResponse();
+    }
+  });
+  function getLLMResponse() {
+    const formData = new FormData();
+    if ($("#user-prompt").val() == "") {
+      $("#user-prompt").val(
+        "this is medical image ,what is this  image about?"
+      );
+    }
+
+    const file_uploaded = document.getElementById("file-upload").files[0];
+
+    if (file_uploaded != undefined) {
+      formData.append("image", file_uploaded);
+    }
+    formData.append("user_prompt", $("#user-prompt").val());
+    history.push({
+      role: "user",
+      content: $("#user-prompt").val(),
+    });
+    formData.append("chat_history", JSON.stringify(history));
+    formData.append("model", $("#choose-model").val());
+
+    formData.append("llm_task", $("#llm-task").val());
+    // formData.append("multi-modal-select",0)
+
+    $loadingSpinner.show();
+    $.ajax({
+      type: "POST",
+      url: "{%url 'emrapp:get_ai_response'%}",
+      headers: {
+        "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
+      },
+      data: formData,
+      //for form data use this contenttype ,processData
+      contentType: false,
+      processData: false,
+      success: function (result) {
+        response = marked.parse(result);
+        //response=result
+        displayMessage(response, "bot");
+        // Add copy functionality to bot messages
+        history.push({
+          role: "assistant",
+          content: response,
+        });
+        $loadingSpinner.hide();
+
+        // $("#llm_diagnosis_output").text(marked.parse(result));
+
+        //        document.getElementById('llm_diagnosis_output').innerHTML =
+        //     marked.parse(result);
+        //   var langTarget = $("#language_target").val();
+      },
+
+      error: function (error) {
+        console.log(error);
+      },
+    });
+  }
+
+  function startRecording() {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (event) => {
+          audioChunks.push(event.data);
+        };
+
+        mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+          const audioUrl = URL.createObjectURL(audioBlob);
+          displayMessage(
+            '<audio controls><source src="' +
+              audioUrl +
+              '" type="audio/wav"></audio>',
+            "user"
+          );
+        };
+
+        mediaRecorder.start();
+        $recordButton.html('<i class="fas fa-stop"></i>');
+      })
+      .catch((error) => {
+        console.error("Error accessing microphone:", error);
+        displayMessage("Error accessing microphone.", "bot");
+      });
+  }
+
+  function stopRecording() {
+    mediaRecorder.stop();
+    $recordButton.html('<i class="fas fa-microphone"></i>');
+  }
+
+  function sendMessage() {
+    const messageText = $messageInput.val().trim();
+    if (messageText) {
+      displayMessage(messageText, "user");
+      addConversationToList(messageText); // Add this line
+      $messageInput.val("");
+
+      // Show loading spinner
+      //   $loadingSpinner.show();
+      getLLMResponse();
+      // Simulate a bot response
+      //      setTimeout(() => {
+      //           displayMessage('This is a simulated response from the bot.', 'bot');
+      //           addConversationToList('This is a simulated response from the bot.'); // And this line
+      // Hide loading spinner after response
+      //         $loadingSpinner.hide();
+      //   }, 2000);
+    }
+  }
+
+  function displayMessage(message, sender) {
+    const $messageDiv = $("<div>")
+      .addClass("message")
+      .addClass(sender + "-message")
+      .html(message);
+    if (sender === "bot") {
+      const copyButton =
+        '<button class="copy-button" onclick="copyToClipboard(this)"><i class="fas fa-copy"></i></button>';
+      $messageDiv.append(copyButton);
+    }
+    $chatLog.append($messageDiv);
+
+    // Scroll to the bottom of the chat log
+    $chatLog.scrollTop($chatLog[0].scrollHeight);
+  }
+
+  function addConversationToList(message) {
+    const now = new Date();
+    const dateString = now.toLocaleDateString();
+    const timeString = now.toLocaleTimeString();
+    const listItemText = `[${dateString} ${timeString}] ${message}`;
+    const $listItem = $("<li>").text(listItemText);
+    $conversationList.append($listItem);
+  }
+  function copyToClipboard(element) {
+    const messageText = $(element).parent().text();
+    navigator.clipboard
+      .writeText(messageText)
+      .then(function () {
+        console.log("Text copied to clipboard");
+      })
+      .catch(function (err) {
+        console.error("Could not copy text: ", err);
+      });
+  }
+</script>
+{%endblock%}

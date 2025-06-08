@@ -1,0 +1,77 @@
+{% extends "emr/base.html" %} {%block content%}
+
+
+<!--patient grid-->
+<div class="row mb-4 mt-4">
+  <div class="col-md-1"></div>
+
+  <div class="col-md-8"><h2>Medical Records</h2></div>
+
+  <div class="col-md-2"></div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-1"></div>
+
+  <div class="col-md-10">
+    <div class="card div-scrollable"style="overflow-y: scroll; height:550px;">
+      <div class="card-header">
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+         <table id="grid" class="table table-striped" style="width: 100%">
+            <thead>
+              <tr>
+                <th>Patient</th>
+
+                <th>MR Code</th>
+                <th>Doctor</th>
+
+
+                <th>Chief Complaint</th>
+                <th>Date</th>
+                  </tr>
+            </thead>
+            <tbody>
+              {%for medical_record in medical_records%}
+              <tr>
+                <td><a href="{%url 'emrapp:medical_charts_view' %}?mr_id={{medical_record.id}} ">{{medical_record.mr_code}}</a></td>
+                
+                <td>{{medical_record.patient}}</td>
+
+                <td>{{medical_record.doctor}}</td>
+
+                <td>{{medical_record.chief_complaint}}</td>
+
+                <td>{{medical_record.service_date |date}}</td>
+                
+                
+                {%endfor%}
+              </tr>
+            </tbody>
+          </table>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+<!--end patient grid-->
+{%endblock%} {%block jsscripts%}
+
+<script>
+  var edit_id;
+ create_mode=true;
+  $(document).ready(function () {
+    $("#grid").DataTable({ pageLength: 5,ordering:false });
+  });
+  
+  
+
+ 
+      
+</script>
+{%endblock%}

@@ -1,0 +1,131 @@
+<!--Add and edit modal-->
+
+<div
+  class="modal fade"
+  id="patient-intake-create-update-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Patient Intakes</h5>
+      </div>
+      <div class="modal-body">
+
+       
+ <!--form start-->
+ <form id="patient-intake-form">
+          {% csrf_token %}
+          <input
+            type="hidden"
+            name="medical_record_id"
+           
+            value="{{ medical_record.id }}"
+          />
+       
+  <div class="form-group ">
+    <label for="chief_complaint" class="col-4 col-form-label">Chief Complaint</label> 
+    <div class="col-8">
+      <textarea id="chief_complaint" name="chief_complaint" cols="40" rows="2" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group ">
+    <label for="past_medical_history" class="col-4 col-form-label">Past Medical History</label> 
+    <div class="col-8">
+      <textarea id="past_medical_history" name="past_medical_history" cols="40" rows="2" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group ">
+    <label for="medications" class="col-4 col-form-label">Medication</label> 
+    <div class="col-12">
+      <input id="medications" name="medications" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group ">
+    <label for="allergies" class="col-4 col-form-label">Allergies</label> 
+    <div class="col-12">
+      <input id="allergies" name="allergies" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group ">
+    <label for="family_history" class="col-4 col-form-label">Family History</label> 
+    <div class="col-12">
+      <textarea id="family_history" name="family_history" cols="40" rows="2" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="social_history" class="col-4 col-form-label">Socail History</label> 
+    <div class="col-12">
+      <textarea id="social_history" name="social_history" cols="40" rows="2" class="form-control"></textarea>
+    </div>
+  </div>
+</form>
+       
+ <!--form end-->
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="genericCloseModal('patient-intake-create-update-modal')"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" onclick="savePatientIntake()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Add and edit modal-->
+
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Patient Intakes</h2>
+    <button
+      class="btn btn-icon btn-outline-secondary"
+      onclick="genericOpenModalForCreate('patient-intake-create-update-modal')"
+    >
+    
+      <i class="fa fa-add"></i>
+    </button>
+  </div>
+{%for patient_intake in patient_intakes%}
+<div class="card shadow-sm p-2">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <p><strong>Date:</strong> {{patient_intake.created_at|date}}</p>
+        <p class="text-muted mb-1">
+          Note: {{patient_intake.patient_intake_note}}       </p>
+        <button
+          class="btn btn-outline-dark btn-sm"
+          onclick="toggleDetails(this)"
+        >
+          Show Details ▼
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-warning btn-sm me-2" onclick="genericOpenModalForEdit('patient-intake-create-update-modal','patient_intake','{{patient_intake.id}}')">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button class="btn btn-danger btn-sm">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="row details-row">
+        <div class="col-sm-4 text-muted">Note</div>
+        <div class="col-sm-8">{{patient_intake.patient_intake_note}}</div>
+      </div>
+       </div>
+  </div>
+{%endfor%}
+  
+</div>

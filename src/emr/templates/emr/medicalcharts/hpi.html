@@ -1,0 +1,102 @@
+<!--Add and edit modal-->
+
+<div
+  class="modal fade"
+  id="hpi-create-update-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">HPI</h5>
+      </div>
+      <div class="modal-body">
+        <!--form start-->
+        <form id="hpi-form">
+          {% csrf_token %}
+          <input
+            type="hidden"
+            name="medical_record_id"
+           
+            value="{{ medical_record.id }}"
+          />
+          <div class="form-group">
+            <label for="balance">Note</label>
+            <textarea
+              id="hpi_note"
+              name="hpi_note"
+              type="text"
+          
+              class="form-control"
+            /></textarea>
+          </div>
+       
+        </form>
+        <!--form end-->
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="genericCloseModal('hpi-create-update-modal')"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" onclick="saveHPI()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Add and edit modal-->
+
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>HPIs</h2>
+    <button
+      class="btn btn-icon btn-outline-secondary"
+      onclick="genericOpenModalForCreate('hpi-create-update-modal')"
+    >
+    
+      <i class="fa fa-add"></i>
+    </button>
+  </div>
+{%for hpi in hpis%}
+<div class="card shadow-sm p-2">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <p><strong>Date:</strong> {{hpi.created_at|date}}</p>
+        <p class="text-muted mb-1">
+          Note: {{hpi.hpi_note}}       </p>
+        <button
+          class="btn btn-outline-dark btn-sm"
+          onclick="toggleDetails(this)"
+        >
+          Show Details ▼
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-warning btn-sm me-2" onclick="genericOpenModalForEdit('hpi-create-update-modal','hpi','{{hpi.id}}')">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button class="btn btn-danger btn-sm">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="row details-row">
+        <div class="col-sm-4 text-muted">Note</div>
+        <div class="col-sm-8">{{hpi.hpi_note}}</div>
+      </div>
+       </div>
+  </div>
+{%endfor%}
+  
+</div>

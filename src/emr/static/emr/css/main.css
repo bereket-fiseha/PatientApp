@@ -3,6 +3,62 @@ body{
 background: #f8fcfd;
 background-color: #f6f5f3;
 }
+  .bordered {
+      border: 1px solid #f6f7f9;
+      min-height: 150px; /* Adjust as needed */
+    }
+.medical-record-patient-info label,.medical-record-patient-info p{
+
+font-size: 18px;
+font-weight: bold !important;
+color:rgb(23, 22, 22) !important;
+
+}    .details {
+      display: none;
+      margin-top: 15px;
+    }
+    .card {
+      margin-top: 30px;
+    }
+    .details-row {
+      border-bottom: 1px solid #dee2e6;
+      padding: 8px 0;
+    }
+
+
+h2,h3{
+
+color:rgb(228, 133, 16) !important;
+
+}
+.btn-icon{
+color:white;
+  background-color:#FFC107 !important; 
+  align-items: start;
+}
+.btn-info{
+  color:white !important;
+}
+    .patient-info{
+
+
+  background: #f8f4e5;
+  padding: 20px 50px;
+  border: 1px solid black;
+   box-shadow: 15px 15px 1px rgb(236, 186, 125) , 10px 10px 1px 2px black;
+
+    }
+    .copy-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .main-content {
+      min-height: 400px; /* Adjust as needed */
+    }
 span.dt-column-title {
     color: #078907;
 }
@@ -19,8 +75,12 @@ div#navbarTogglerDemo01
   margin-left:300px;
   
 }
-.toast.toast-success{
+.toast.toast-success,.taost.toast-error{
 background-color: green !important;
+
+}
+.taost.toast-error{
+background-color: red !important;
 
 }
 .select-dropdown{
@@ -122,3 +182,4 @@ margin-top:50px;
         transform: translate(-50%, -50%);
         z-index: 10; /* Ensure it's on top of other elements */
     }
+    

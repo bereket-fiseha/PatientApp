@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'patient',
+    'emr',
     'user'
 ]
 
@@ -139,3 +139,5 @@ EMAIL_HOST_PASSWORD = 'vtmk gvxf pjgc xthc'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+AUTH_USER_MODEL = 'user.CustomUser'

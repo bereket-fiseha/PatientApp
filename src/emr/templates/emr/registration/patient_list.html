@@ -1,4 +1,4 @@
-{% extends "patient/base.html" %} {%block content%}
+{% extends "emr/base.html" %} {%block content%}
 
 <!--Add and edit modal-->
 
@@ -90,12 +90,12 @@
 <div class="row">
   <div class="col-md-1"></div>
 
-
+>
   <div class="col-md-10">
     <div class="card div-scrollable"style="overflow-y: scroll; height:550px;">
       <div class="card-header">
-        <button class="btn" onclick="openPatientModalForCreate()">
-          <i class="fa fa-plus-circle fa-2xl"></i>
+        <button class="btn btn-icon  btn-outline-secondary" onclick="openPatientModalForCreate()">
+          <i class="fa fa-plus-circle" ></i>
         </button>
       </div>
       <div class="card-body">
@@ -121,7 +121,7 @@
                 {%for patient in patients%}
                 <tr>
              
-                  <td>{{patient.full_name}}</td>
+                    <td><a href="{%url 'emrapp:medical_record_per_patient'%}?patient_id={{patient.id}}">{{patient.full_name}}</a></td>
 
                   <td>{{patient.gender}}</td>
 
@@ -131,8 +131,9 @@
                   <td>{{patient.phone_number}}</td>
                                    <td>{{patient.created_at |date}}</td>
                   <td>
+      
                     <button
-                      class="btn mb-2"
+                      class="btn btn-warning btn-sm me-2"
                       onclick="openPatientModalForEdit({{patient.id}})"
                     >
                       <i class="fa fa-edit fa-lg" area-hidden="true"></i>
@@ -140,7 +141,7 @@
                   </td>
                   <td>
                     <button
-                      class="btn"
+                      class="btn btn-danger btn-sm me-2"
                       onclick="deletePatient({{patient.id}})"
                     >
                       <i class="fa fa-trash fa-lg" area-hidden="true"></i>
@@ -198,7 +199,7 @@ edit_id=id;
         dict["id"] = edit_id;
       }
     $.ajax({
-      url: "{%url 'patientapp:patient_save'%}",
+      url: "{%url 'emrapp:patient_save'%}",
       headers: {
         "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
       },
@@ -228,7 +229,14 @@ window.location.reload()
           }, "1000");
       
     },
-      error: function () {},
+      error: function () {
+
+         toastr.error("Error, Registration failed!");
+ 
+              setTimeout(() => {
+window.location.reload()
+          }, "1000");
+      },
     });
   }
   function fillPatientEditModal(id){

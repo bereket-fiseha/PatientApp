@@ -1,0 +1,134 @@
+/* Master Sidebar Styles */
+    .master-sidebar {
+      height: 100vh;
+      width: 250px !important;
+      padding-top: 20px;
+      
+      background-color: #FFE5B4; /* Light orange background */
+      color: #333;
+      transition: width 0.3s ease; /* Smooth transition for collapsing */
+    }
+    .master-sidebar.collapsed {
+      width: 0;
+      overflow: hidden;
+      padding: 0;
+    }
+    .master-sidebar .list-group-item {
+     
+      background-color: transparent;
+      color: #333;
+      border: none;
+      padding: 15px 20px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+    .master-sidebar .list-group{
+       margin-top:35px;
+    }
+    .master-sidebar .list-group-item:hover {
+      background-color: #FFD700;
+    }
+    .master-sidebar .list-group-item.active {
+      background-color: #FF8C00;
+      color: #fff;
+    }
+    .toggle-sidebar-btn {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      margin: 10px; /* Added proper margin for spacing */
+      z-index: 1000;
+      background-color: #FF8C00;
+      color: #fff;
+      border: none;
+      padding: 8px 12px; /* Slightly increased padding for better appearance */
+      cursor: pointer;
+      border-radius: 4px; /* Subtle rounding for aesthetics */
+    }
+    .toggle-sidebar-btn:hover {
+      background-color: #e07b00; /* Darker orange on hover */
+    }
+
+    /* Existing Sidebar Styles */
+    .sidebar {
+      height: 100vh;
+      position: fixed;
+      top: 50px !important;
+      left: 270px; /* Default position */
+      width: 300px;
+      padding-top: 20px;
+      overflow-y: auto;
+      background-color: #f8f9fa;
+      transition: left 0.3s ease; /* Smooth transition for sidebar shift */
+    }
+    .sidebar.collapsed {
+      left: 0; /* Shift to left when master sidebar is collapsed */
+    }
+    .content {
+      margin-left: 350px; /* Default margin */
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
+      transition: margin-left 0.3s ease; /* Smooth transition for content shift */
+    }
+    .content.collapsed {
+      margin-left: 320px; /* Adjusted margin when master sidebar is collapsed */
+    }
+    .patient-info {
+      margin-bottom: 20px;
+    }
+    .collapsible-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .collapsible-content.show {
+      max-height: 200px;
+    }
+    .collapsible-content .list-group-item {
+      padding-left: 30px;
+      margin-bottom: 8px;
+      margin-top: 5px;
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+    .list-group-item.active {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
+    .next-visit-section {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+      padding: 15px;
+      border-radius: 0.25rem;
+      margin-bottom: 20px;
+    }
+
+    /* Slick style for the new tabs */
+    .slick-tabs .nav-link {
+      border: none;
+      border-radius: 0.5rem 0.5rem 0 0;
+      margin-right: 5px;
+      padding: 10px 20px;
+      background-color: #e9ecef;
+      color: #495057;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .slick-tabs .nav-link:hover {
+      background-color: #dee2e6;
+      color: #212529;
+    }
+    .slick-tabs .nav-link.active {
+      background-color: #007bff;
+      color: #fff;
+      border-bottom-color: #007bff;
+      box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+    }
+    .slick-tabs .tab-content {
+      border: 1px solid #dee2e6;
+      border-top: none;
+      padding: 20px;
+      border-radius: 0 0 0.5rem 0.5rem;
+      background-color: #fff;
+    }

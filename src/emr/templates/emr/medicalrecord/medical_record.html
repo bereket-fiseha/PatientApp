@@ -1,0 +1,311 @@
+{% extends "emr/base.html" %} {%block content%} 
+
+<div
+  class="modal fade"
+  id="medical-record-create-update-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Medical Record</h5>
+      </div>
+      <div class="modal-body">
+        <!--form start-->
+        <form id="medical-record-form" >  
+          {% csrf_token %}
+          <input type="hidden" name="patient_id" value="{{patient.id}}" />
+
+          <div class="form-group mb-2">
+            <label for="mr code">MR Code:</label>
+            <input type="text" class="form-control" name="mr_code" id="mr_code" ></textarea>
+          </div>
+          
+             <div class="form-group mb-3">
+            <label for="doctor">Doctor:</label>
+      
+            <select class="form-control select-dropdown" name="doctor_id" id="doctor_id">
+              
+              <option value="">Select Doctor ...</option>
+              {%for doctor in doctors%}
+              <option value="{{doctor.id}}">{{doctor.full_name}}</option>
+              {%endfor%}
+
+
+            </select>
+
+          </div>
+          <div class="form-group mb-2">
+            <label for="chief_complaint">Chief Complaint:</label>
+            <textarea type="text" class="form-control" name="chief_complaint" id="chief_complaint"></textarea>
+          </div>
+          
+          <div class="form-group mb-2">
+            <label for="chief_complaint">Symptom Details:</label>
+            <textarea type="text" class="form-control" name="symptom_details" id="symptom_details"></textarea>
+          </div>
+          <div class="form-group mb-2">
+            <label for="pain_scale">Pain Scale:</label>
+            <input type="text" class="form-control" name="pain_scale" id="pain_scale" />
+          </div>
+        </form>
+        <!--form end-->
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="closepatientModal()"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" onclick="saveMedicalRecord()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{%if  error%}
+
+<div class="container mt-4">
+      <div class="d-flex mt-3 mb-3">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+        <div style="width: 80px"></div>
+      </div>
+      <div class="card"><div class="card-body mt-4 ">
+
+          <div class="mt-4"><h3>{{error}}</h3></div>
+
+      </div></div>
+    
+
+</div>
+{%else%}
+<div class="container mt-4">
+  <!-- Top full-width bordered section -->
+
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-5">
+      {%if not patient%}
+      <div class="d-flex mt-3 mb-3">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+        <div style="width: 80px"></div>
+      </div>
+      {%endif%}
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+  <div class="bordered patient-info mb-4">
+    <!-- Header content goes here -->
+
+    <div class="row">
+      <div class="col-md-6 bordered medical-record-patient-info">
+        <h2>Patient Info</h2>
+        <div>
+        
+        <label>Name: </label>   <span><label>{{patient.full_name}}<label></span></div>
+          <div>
+        <label>Age: </label>   <span><label>{{patient.age}}</label></span></div>
+
+      <div> <label>Gender: </label>   <span><label>{{patient.gender}}</label></span></div>
+<div>
+       <label>Phone: </label>   <span><label>{{patient.phone}}</label></span></div>
+    
+    </div>
+       <div class="col-md-6 bordered">
+        <!-- Right Box -->
+        <h2>Medical Info</h2>
+        <label>Allergy: <span>alergy is this </span></label>
+        <label
+          >Current Medication: <span>current medication is this</span></label
+        >
+        <label
+          >Self reported Complaint:
+          <span>reported complaint is this</span></label
+        >
+        <label
+          >Self reported Symptoms: <span>reported symptom is this</span></label
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Two-column layout -->
+  <div class="row mt-5">
+    <div class="col-md-8 bordered main-content">
+      <!--medical_record grid-->
+      <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-8"><h2>Medical Records</h2></div>
+
+        <div class="col-md-2"></div>
+      </div>
+
+     
+
+       <div class="card p-2 m-2">
+      <div class="row">
+
+<div class="col-md-3">
+        <button class="btn btn-icon" onclick="openMedicalRecordModalForCreate()">
+          <i class="fa fa-plus-circle " ></i>
+        </button></div>
+<div class="col-md-8"></div>
+
+      </div>
+      
+        <div >
+          <table id="example" class="table table-striped" style="width: 100%">
+            <thead>
+              <tr>
+                <th>Patient</th>
+
+                <th>MR Code</th>
+                <th>Doctor</th>
+
+
+                <th>Chief Complaint</th>
+                <th>Date</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for medical_record in medicalrecords%}
+              <tr>
+                <td><a href="{%url 'emrapp:medical_charts_view' %}?mr_id={{medical_record.id}} ">{{medical_record.mr_code}}</a></td>
+                
+                <td>{{medical_record.patient}}</td>
+
+                <td>{{medical_record.doctor}}</td>
+
+                <td>{{medical_record.chief_complaint}}</td>
+
+                <td>{{medical_record.service_date |date}}</td>
+                <td>
+                  <button
+                    class="btn mb-2"
+                    onclick="openmedicalRecordModalForEdit({{medical_record.id}})"
+                  >
+                    <i class="fa fa-edit fa-lg" area-hidden="true"></i>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    class="btn"
+                    onclick="deletemedical_record({{medical_record.id}})"
+                  >
+                    <i class="fa fa-trash fa-lg" area-hidden="true"></i>
+                  </button>
+                </td>
+
+                {%endfor%}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      <!--end medical_record grid-->
+    </div>
+    <div class="col-md-4 bordered main-content">
+      <!-- Right section content -->
+      <div class="text-center">
+        <div>
+          <label>Prescription</label><span>1</span> <label>Vital Signs</label
+          ><span>1</span> <label>Review Of Systems</label><span>1</span>
+
+          <label>Total No. Visits</label><span>1</span>
+
+          <label>Last Visit</label><span>Jan 4 2022</span>
+
+          <label>Next Visit</label><span>Jan 4 2022</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endif%}
+{%endblock%} {%block jsscripts%}
+
+<script>
+  var edit_id;
+  create_mode = true;
+
+  $(document).ready(function () {
+    $("#example").DataTable({ pageLength: 5, ordering: false });
+  });
+  function openMedicalRecordModalForCreate() {
+    $("#medical-record-create-update-modal").modal("show");
+    create_mode = true;
+   // $("#medical_record-form")[0].reset();
+  }
+  function openMedicalRecordModalForEdit(id) {
+    $("#medical-record-create-update-modal").modal("show");
+    fillmedicalRecordEditModal(id);
+    edit_id = id;
+    create_mode = false;
+  }
+  function closemedicalRecordModal() {
+    $("#medical-record-create-update-modal").modal("hide");
+  }
+
+  {% comment %} function deletemedical_record(id) {
+    genericDelete(
+      "{%url 'emrapp:medical_record_delete'%}",
+      id,
+      "Are you sure you want to delete this Medical Record?",
+      function () {
+        location.reload();
+      },
+      function () {}
+    );
+} {% endcomment %}
+  function saveMedicalRecord() {
+
+    // genericSave(modelName,formUrl,modalId,formId,create_mode,edit_id,onSuccess,onFail) 
+  genericSave("Medical Record","{%url 'emrapp:medical_record_save'%}","medical-record-create-update-modal","medical-record-form",true,undefined)
+  }
+  function fillmedicalRecordEditModal(id) {
+    var uid = $(this).closest("tr").find("td:eq(0)").text();
+    console.log(uid);
+    console.log(id);
+    $.ajax({
+      url: "/medical_record/" + id,
+      headers: {
+        "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val(),
+      },
+      type: "GET",
+      data: {},
+      success: function (result) {
+        console.log(result);
+        $.each(result[0]["fields"], function (key, value) {
+          $("#" + key).val(value);
+        });
+      },
+      error: function () {},
+    });
+  }
+</script>
+{%endblock%}

@@ -1,0 +1,650 @@
+{% extends "emr/base.html" %} {%block content%}
+<!-- Main Content Area -->
+<div class="col-10 medical-charts-content" style="margin-top: 20px">
+  <!-- Patient Section -->
+  <div id="patientSection">
+    <div class="row">
+      <div class="col-3 sidebar bg-light">
+        <div class="border p-2 mb-3 medical-record-patient-info">
+          <p>Patient Name: {{patient.full_name}}</p>
+
+          <p>MRN:Card-{{patient.id}}</p>
+          <p>Age: {{patient.age}}</p>
+        </div>
+        <div class="list-group">
+          <button
+            type="button"
+            class="list-group-item list-group-item-action active"
+            id="vitalSignBtn"
+          >
+            VitalSign
+          </button>
+
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            id="patientIntakeBtn"
+          >
+            Patient Intake
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action"
+            id="hpiBtn"
+          >
+            HPI
+          </button>
+          <button
+            type="button"
+            class="list-group-item list-group-item-action "
+            id="medicalRecordBtn"
+          >
+            Medical Record
+          </button>
+          <div
+            class="list-group-item list-group-item-action"
+            data-bs-toggle="collapse"
+            href="#chartsCollapse"
+            role="button"
+            aria-expanded="false"
+            aria-controls="chartsCollapse"
+          >
+            Charts
+            <span class="float-end"><i class="bi bi-chevron-down"></i></span>
+          </div>
+          <div class="collapse collapsible-content" id="chartsCollapse">
+            <div class="list-group">
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+              >
+                Patient Intake
+              </button>
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+                id="ordersBtn"
+              >
+                Orders
+              </button>
+              <button
+                type="button"
+                class="list-group-item list-group-item-action"
+                id="planBtn"
+              >
+                Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9 content">
+        <div class="next-visit-section border">
+          <p class="mb-0">
+            Next Visit: Jan 25 2020
+            <button class="btn btn-primary btn-sm float-end">
+              Add new visit
+            </button>
+          </p>
+        </div>
+        <div id="patientIntakeContent" style="display: none">
+        {%include 'emr/medicalcharts/patient_intake.html'%}
+        </div>
+        <div id="hpiContent" style="display: none">
+     {% include "emr/medicalcharts/hpi.html" %}
+        </div>
+        <div id="medicalRecordContent" style="display:none">
+          <h3>Medical Record History</h3>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Details</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Jan 25, 2020</td>
+                  <td>Initial Consultation</td>
+                  <td>Completed</td>
+                </tr>
+                <tr>
+                  <td>Feb 10, 2020</td>
+                  <td>Follow-up</td>
+                  <td>Scheduled</td>
+                </tr>
+                <tr>
+                  <td>Mar 01, 2020</td>
+                  <td>Lab Results Review</td>
+                  <td>Completed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="ordersContent" style="display: none">
+          <ul class="nav nav-tabs" id="ordersTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="lab-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#lab"
+                type="button"
+                role="tab"
+                aria-controls="lab"
+                aria-selected="true"
+              >
+                Laboratory Order
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="imaging-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#imaging"
+                type="button"
+                role="tab"
+                aria-controls="imaging"
+                aria-selected="false"
+              >
+                Imaging Order
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="other-tab"
+                data-bs-toggle="tab"
+                type="button"
+                role="tab"
+                aria-controls="other"
+                aria-selected="false"
+              >
+                Other Orders
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="ordersTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="lab"
+              role="tabpanel"
+              aria-labelledby="lab-tab"
+            >
+              <p>Laboratory orders will be displayed here.</p>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="imaging"
+              role="tabpanel"
+              aria-labelledby="imaging-tab"
+            >
+              <p>Imaging orders will be displayed here.</p>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="other"
+              role="tabpanel"
+              aria-labelledby="other-tab"
+            >
+              <p>Other orders will be displayed here.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="vitalSignContent" >
+          {% include "emr/medicalcharts/vital_sign.html" %}
+        </div>
+
+        <div id="planContent" style="display: none">
+          <ul class="nav nav-tabs slick-tabs" id="planTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="referral-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#referral"
+                type="button"
+                role="tab"
+                aria-controls="referral"
+                aria-selected="true"
+              >
+                Referral
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="prescription-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#prescription"
+                type="button"
+                role="tab"
+                aria-controls="prescription"
+                aria-selected="false"
+              >
+                Prescription
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="certificate-tab"
+                data-bs-toggle="tab"
+                type="button"
+                role="tab"
+                aria-controls="certificate"
+                aria-selected="false"
+              >
+                Certificate
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="planA-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#planA"
+                type="button"
+                role="tab"
+                aria-controls="planA"
+                aria-selected="false"
+              >
+                Plan A
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="planB-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#planB"
+                type="button"
+                role="tab"
+                aria-controls="planB"
+                aria-selected="false"
+              >
+                Plan B
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="planC-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#planC"
+                type="button"
+                role="tab"
+                aria-controls="planC"
+                aria-selected="false"
+              >
+                Plan C
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="planTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="referral"
+              role="tabpanel"
+              aria-labelledby="referral-tab"
+            >
+              <p>Referral details will be displayed here.</p>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="prescription"
+              role="tabpanel"
+              aria-labelledby="prescription-tab"
+            >
+              <p>Prescription details will be displayed here.</p>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="certificate"
+              role="tabpanel"
+              aria-labelledby="certificate-tab"
+            >
+              <p>Certificate details will be displayed here.</p>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="planA"
+              role="tabpanel"
+              aria-labelledby="planA-tab"
+            >
+              <p>Details for Plan A will be displayed here.</p>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="planB"
+              role="tabpanel"
+              aria-labelledby="planB-tab"
+            >
+              <p>Details for Plan B will be displayed here.</p>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="planC"
+              role="tabpanel"
+              aria-labelledby="planC-tab"
+            >
+              <p>Details for Plan C will be displayed here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Doctor Section -->
+  <div id="doctorSection" style="display: none">
+    <div class="content">
+      <h3>Doctor Management</h3>
+      <p>Doctor management information will be displayed here.</p>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Doctor Name</th>
+              <th>Specialty</th>
+              <th>Contact</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dr. Alice Smith</td>
+              <td>Cardiology</td>
+              <td>(555) 123-4567</td>
+              <td>Active</td>
+            </tr>
+            <tr>
+              <td>Dr. Bob Johnson</td>
+              <td>Pediatrics</td>
+              <td>(555) 987-6543</td>
+              <td>Active</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointment Section -->
+  <div id="appointmentSection" style="display: none">
+    <div class="content">
+      <h3>Appointment Management</h3>
+      <p>Appointment management information will be displayed here.</p>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Doctor</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Beki</td>
+              <td>Jan 25, 2020</td>
+              <td>10:00 AM</td>
+              <td>Dr. Alice Smith</td>
+              <td>Scheduled</td>
+            </tr>
+            <tr>
+              <td>John Doe</td>
+              <td>Feb 10, 2020</td>
+              <td>2:00 PM</td>
+              <td>Dr. Bob Johnson</td>
+              <td>Pending</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div> 
+</div>
+{%endblock%} {%block jsscripts%}
+<script>
+  function toggleDetails(btn) {
+    const details = btn.closest(".card").querySelector(".details");
+    const isShown = details.style.display === "block";
+    details.style.display = isShown ? "none" : "block";
+    btn.textContent = isShown ? "Show Details ▼" : "Hide Details ▲";
+  }
+
+  $(function () {
+    // Master Sidebar button references
+    const patientMasterBtn = $("#patientMasterBtn");
+    const doctorMasterBtn = $("#doctorMasterBtn");
+    const appointmentMasterBtn = $("#appointmentMasterBtn");
+    const medicalChartMasterBtn = $("#medicalChartMasterBtn");
+    const toggleSidebarBtn = $("#toggleSidebarBtn");
+
+    // Main content section references
+    const patientSection = $("#patientSection");
+    const doctorSection = $("#doctorSection");
+    const appointmentSection = $("#appointmentSection");
+    const medicalChartSection = $("#medicalChartSection");
+    const masterSidebar = $("#masterSidebar");
+
+    // Existing Sidebar button references
+    const patientIntakeBtn = $("#patientIntakeBtn");
+    const hpiBtn = $("#hpiBtn");
+    const medicalRecordBtn = $("#medicalRecordBtn");
+    const ordersBtn = $("#ordersBtn");
+    const planBtn = $("#planBtn");
+    const vitalSignBtn = $("#vitalSignBtn");
+
+    // Existing Content section references
+    const patientIntakeContent = $("#patientIntakeContent");
+    const hpiContent = $("#hpiContent");
+    const medicalRecordContent = $("#medicalRecordContent");
+    const ordersContent = $("#ordersContent");
+    const planContent = $("#planContent");
+    const vitalSignContent = $("#vitalSignContent");
+    /**
+     * Sets the active class on the clicked master sidebar button and removes it from others.
+     * @param {jQueryObject} activeButton - The jQuery object of the button element to set as active.
+     */
+
+    function setActiveMasterButton(activeButton) {
+      patientMasterBtn.removeClass("active");
+      doctorMasterBtn.removeClass("active");
+      appointmentMasterBtn.removeClass("active");
+      medicalChartMasterBtn.removeClass("active");
+      activeButton.addClass("active");
+    }
+
+    /**
+     * Hides all main content sections using jQuery's hide() method.
+     */
+    function hideAllSections() {
+      patientSection.hide();
+      doctorSection.hide();
+      appointmentSection.hide();
+      medicalChartSection.hide();
+    }
+
+    /**
+     * Sets the active class on the clicked sidebar button and removes it from others.
+     * @param {jQueryObject} activeButton - The jQuery object of the button element to set as active.
+     */
+    function setActiveButton(activeButton) {
+      patientIntakeBtn.removeClass("active");
+      hpiBtn.removeClass("active");
+      medicalRecordBtn.removeClass("active");
+      ordersBtn.removeClass("active");
+      planBtn.removeClass("active");
+      vitalSignBtn.removeClass("active");
+      activeButton.addClass("active");
+    }
+
+    /**
+     * Hides all patient content sections using jQuery's hide() method.
+     */
+    function hideAllContent() {
+      patientIntakeContent.hide();
+      hpiContent.hide();
+      medicalRecordContent.hide();
+      ordersContent.hide();
+      planContent.hide();
+      vitalSignContent.hide();
+    }
+
+    // Toggle Sidebar Event Listener
+    toggleSidebarBtn.on("click", function () {
+      masterSidebar.toggleClass("collapsed");
+      $(".sidebar").toggleClass("collapsed");
+      $(".content").toggleClass("collapsed");
+      $(this).find("i").toggleClass("bi-list bi-x");
+    });
+
+    // Master Sidebar Event Listeners
+    patientMasterBtn.on("click", function () {
+      hideAllSections();
+      patientSection.show();
+      setActiveMasterButton($(this));
+      // Reset to default patient section view
+      hideAllContent();
+     // medicalRecordContent.show();
+      setActiveButton(medicalRecordBtn);
+    });
+
+    doctorMasterBtn.on("click", function () {
+      hideAllSections();
+      doctorSection.show();
+      setActiveMasterButton($(this));
+    });
+
+    appointmentMasterBtn.on("click", function () {
+      hideAllSections();
+      appointmentSection.show();
+      setActiveMasterButton($(this));
+    });
+
+    // Existing Sidebar Event Listeners
+    patientIntakeBtn.on("click", function () {
+      hideAllContent();
+      patientIntakeContent.show();
+      setActiveButton($(this));
+    });
+
+    hpiBtn.on("click", function () {
+      hideAllContent();
+      hpiContent.show();
+      setActiveButton($(this));
+    });
+
+    medicalRecordBtn.on("click", function () {
+      hideAllContent();
+      medicalRecordContent.show();
+      setActiveButton($(this));
+    });
+
+    ordersBtn.on("click", function () {
+      hideAllContent();
+      ordersContent.show();
+      setActiveButton($(this));
+    });
+
+    planBtn.on("click", function () {
+      hideAllContent();
+      planContent.show();
+      setActiveButton($(this));
+    });
+
+    vitalSignBtn.on("click", function () {
+      hideAllContent();
+      vitalSignContent.show();
+      setActiveButton($(this));
+    });
+//initialize set vital sign as active
+    setActiveButton(vitalSignBtn);
+    hideAllContent();
+    vitalSignContent.show();
+  });
+</script>
+<!--generic-->
+<script>
+  
+   var edit_id ;
+   var   create_mode = false;
+   
+  function genericOpenModalForEdit(modal_id,url,id) {
+    genericFillEditModal(url,id);
+       $("#"+modal_id).modal("show");
+       create_mode=false;
+     edit_id=id;
+  }
+
+  {% comment %} function deleteVitalSign(id) {
+    genericDelete(
+      "{%url 'emrapp:vital_sign_delete'%}",
+      id,
+      "Are you sure you want to delete this Vital Sign?",
+      function () {
+        location.reload();
+      },
+      function () {}
+    );
+} {% endcomment %}
+ 
+function genericOpenModalForCreate(modal_id) {
+    $("#"+modal_id).modal("show");
+    create_mode = true;
+   // $("#medical_record-form")[0].reset();
+  }
+  
+function genericCloseModal(modal_id) {
+    $("#"+modal_id).modal("hide");
+   }
+  
+</script>
+
+
+
+<!--script for vital signs-->
+<script>
+  function saveVitalSign() {
+
+    // genericSave(modelName,formUrl,modalId,formId,create_mode,edit_id,onSuccess,onFail) 
+  genericSave("Vital Sign","{%url 'emrapp:vital_sign_save'%}","vital-sign-create-update-modal","vital-sign-form",create_mode,edit_id)
+  }
+  function fillVitalSignEditModal(id) {
+   genericFillEditModal('vitalsign',id);  
+  }
+</script>
+
+<!--script for hpi-->
+<script>
+function saveHPI() {
+    // genericSave(modelName,formUrl,modalId,formId,create_mode,edit_id,onSuccess,onFail) 
+  genericSave("HPI","{%url 'emrapp:hpi_save'%}","hpi-create-update-modal","hpi-form",create_mode,edit_id)
+  }
+  function fillHPIEditModal(id) {
+  
+  genericFillEditModal('hpi',id);  
+  }
+</script>
+<!--script for hpi-->
+<script>
+function savePatientIntake() {
+    // genericSave(modelName,formUrl,modalId,formId,create_mode,edit_id,onSuccess,onFail) 
+  genericSave("Patient Intake","{%url 'emrapp:patient_intake_save'%}","patient-intake-create-update-modal","patient-intake-form",create_mode,edit_id)
+  }
+  function fillHPIEditModal(id) {
+  
+  genericFillEditModal('hpi',id);  
+  }
+</script>
+{%endblock%}
+

@@ -1,0 +1,24 @@
+
+{%  if user.role == 'triage' %}
+<a class="list-group-item list-group-item-action active" id="" href="{% url 'emrapp:patient_view' %}">
+      <i class="fas fa-user"></i> Patient
+</a>
+
+<a class="list-group-item list-group-item-action" id="" href="{% url 'emrapp:doctor_view' %}">
+      <i class="fas fa-user-md"></i> Doctor
+</a>
+{% endif %}
+
+{%  if user.role == 'doctor' %}
+<a class="list-group-item list-group-item-action" id="" href="{% url 'emrapp:medical_record_per_doctor' %}">
+      <i class="fas fa-user-md"></i> My Medical Record
+</a>
+{% endif %}
+
+<a class="list-group-item list-group-item-action" id="" href="#">
+      <i class="fas fa-calendar-alt"></i> Appointment
+</a>
+
+<a class="list-group-item list-group-item-action" id="" href="#">
+      <i class="fas fa-gear"></i> Setting
+</a>

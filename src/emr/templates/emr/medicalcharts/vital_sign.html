@@ -1,0 +1,165 @@
+<!--Add and edit modal-->
+
+<div
+  class="modal fade"
+  id="vital-sign-create-update-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Vital Sign</h5>
+      </div>
+      <div class="modal-body">
+        <!--form start-->
+        <form id="vital-sign-form">
+          {% csrf_token %}
+          <input
+            type="hidden"
+            name="medical_record_id"
+           
+            value="{{ medical_record.id }}"
+          />
+          <div class="form-group">
+            <label for="text">Pulse Rate</label>
+            <input id="pulse_rate" name="pulse_rate" type="number" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="respiratory-rate">Respiratory Rate</label>
+            <input
+              id="respiratory_rate"
+              name="respiratory_rate"
+              type="number"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="height">Height</label>
+            <input id="height" name="height" type="number" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="temprature">Temprature</label>
+            <input
+              id="temprature"
+              name="temprature"
+              type="number"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="text1">Weight</label>
+            <input id="weight" name="weight" type="number" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="blood-pressure">Blood Pressure</label>
+            <input
+              id="blood_pressure"
+              name="blood_pressure"
+              type="text"
+          
+              class="form-control"
+            />
+          </div>
+             <div class="form-group">
+            <label for="blood-pressure">Blood Oxygen Saturation</label>
+            <input
+              id="blood_oxygen_saturation"
+              name="blood_oxygen_saturation"
+              type="text"
+          
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="balance">Balance</label>
+            <input
+              id="balance"
+              name="balance"
+              type="text"
+          
+              class="form-control"
+            />
+          </div>
+       
+        </form>
+        <!--form end-->
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="genericCloseModal('vital-sign-create-update-modal')"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" onclick="saveVitalSign()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Add and edit modal-->
+
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Vital Signs</h2>
+    <button
+      class="btn btn-icon btn-outline-secondary"
+      onclick="genericOpenModalForCreate('vital-sign-create-update-modal')"
+    >
+    
+      <i class="fa fa-add"></i>
+    </button>
+  </div>
+{%for vital_sign in vital_signs%}
+<div class="card shadow-sm p-2">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <p><strong>Date:</strong> {{vital_sign.created_at|date}}</p>
+        <p class="text-muted mb-1">
+          Temperature: {{vital_sign.temprature}}°F | PR Rate: {{vital_sign.pulse_rate}} bpm | Heart Rate: {{vital_sign.respiratory_rate}} bpm
+        </p>
+        <button
+          class="btn btn-outline-dark btn-sm"
+          onclick="toggleDetails(this)"
+        >
+          Show Details ▼
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-warning btn-sm me-2" onclick="genericOpenModalForEdit('vital-sign-create-update-modal','vitalsign','{{vital_sign.id}}')">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button class="btn btn-danger btn-sm">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="row details-row">
+        <div class="col-sm-4 text-muted">Height</div>
+        <div class="col-sm-8">5'6"</div>
+      </div>
+      <div class="row details-row">
+        <div class="col-sm-4 text-muted">Weight</div>
+        <div class="col-sm-8">{{vital_sign.weight}} lbs</div>
+      </div>
+      <div class="row details-row">
+        <div class="col-sm-4 text-muted">Blood Pressure</div>
+        <div class="col-sm-8">120/80 mmHg</div>
+      </div>
+      <div class="row details-row">
+        <div class="col-sm-4 text-muted">Pulse Rate</div>
+        <div class="col-sm-8">70 bpm</div>
+      </div>
+    </div>
+  </div>
+{%endfor%}
+  
+</div>

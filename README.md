@@ -1,7 +1,9 @@
 # 🧠 Django Mini EMR
 
 ## Overview
-The **Patient Registration System** is a Django-based web application designed to manage patient information efficiently. It allows users to register, update, and view patient details in a secure and user-friendly interface.
+The **Mini Emr System**  with secure user authentication, role-based access,   handling of patients, doctors, and medical records. It supports  medical charting (e.g., vitals, HPI, assessments), record assignment, and email notification.
+
+
 
 
 [![Django](https://img.shields.io/badge/Django-5.2-green.svg)](https://www.djangoproject.com/)

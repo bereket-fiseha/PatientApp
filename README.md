@@ -42,10 +42,9 @@ The **Patient Registration System** is a Django-based web application designed t
 - on the left side is what is visible for **triage/Receptionist** in the side bar menu, while on the right side is for **doctor**
 
 <div style="display: flex; justify-content: space-between;">
- 
-    <img src="https://github.com/user-attachments/assets/1077afa9-d878-4c93-95e7-906672bfe136" alt="register" style="width: 45%;">
-    <img src="https://github.com/user-attachments/assets/65d2a992-76b4-495c-b8a5-18700902299e" alt="register" style="width: 45%;">
-  
+  <img src="https://github.com/user-attachments/assets/1077afa9-d878-4c93-95e7-906672bfe136" alt="login" style="width: 45%;">
+    <img src="https://github.com/user-attachments/assets/65d2a992-76b4-495c-b8a5-18700902299e" alt="login" style="width: 45%;">
+   
 </div>
 
 
@@ -58,7 +57,7 @@ The **Patient Registration System** is a Django-based web application designed t
 
 
 
-### 4. Patient Craete/update
+### 4. Patient Craet/update
 
 ![patient create](https://github.com/user-attachments/assets/8ddb20dc-4065-45df-8849-b1aff1f9e8ff)
 
